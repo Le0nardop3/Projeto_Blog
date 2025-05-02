@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<div class="c_conteudo">
+  <div class="conteudo">
+    <form action="{% url 'cadastro' %}" method="POST">{% csrf_token %}
+      <h2>Cadastro de Usuários</h2><br>
+      <label for="nome">Nome:</label>
+      <br> <input type="text" name="nome" placeholder="Nome..." required><br>
+      <label for="email">Email:</label>
+      <br> <input type="email" name="email" placeholder="email..." required><br>
+      <label for="senha">Senha:</label>
+      <br> <input type="password" name="senha" placeholder="Senha..." required><br><br>
+      <input type="submit" value="Cadastrar">
+      {% if message2 %}<br><br><p class="aviso2">Usuario cadastrado</p>{% endif %}
+      {% if message %}<br><br><p class="aviso">Já existe um usuario com esse nome</p>{% endif %}
+    </form>
+  </div>
+</div>
+
+<style>
+  .c_conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75vh;
+
+  }
+
+  .conteudo {
+    width: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 2px solid black;
+    padding: 25px;
+    margin-top: 17vh;
+    background-color: linen;
+
+  }
+  .aviso{
+    color: red;
+  }
+  .aviso2{
+    color: green;
+  }
+</style>
+
+{% endblock %}

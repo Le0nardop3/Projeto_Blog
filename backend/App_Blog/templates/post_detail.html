@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<section class="Estrutura">
+    <h1>Post de {{ post.author }}</h1><br>
+    <div class="Atividade">
+        <div class="post-container">
+            <div class="post-c"><br>
+                <div>
+                    <h3>{{ post.title }}</h3>
+                </div>
+                <div class="linha"></div>
+                <div>
+                    <img class="imagem" src="{{post.image.url}}" alt="imagem de {{ post.author }}">
+                </div>
+                <div class="linha"></div>
+                <div class="texto">
+                    <p class="texto_post">{{ post.text|safe }}</p>
+                </div>
+                <div class="linha"></div>
+                <div class="baixo">
+                    <div class="data">
+                        <p>Criador por: {{ post.author }}</p>
+                        <p>Publicado em {{ post.created_date }} </p>
+                    </div>
+                    <ion-icon class="comentar" name="chatbubble-outline"></ion-icon>
+                </div><br>
+
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <h2>Comentarios</h2><br>
+    <div class="Atividade2">
+
+        <div class="comment-form">
+            <form method="post" class="comment-form-t">
+                {% csrf_token %}
+
+                <input type="hidden" name="author" value="{{ user.username }}">
+
+                <label for="texto_post"><b>Comentar:</b></label><br>
+                <textarea name="text" rows="3" class="entrada_de_texto" required></textarea><br>
+
+                <button type="submit">Adicionar Comentário</button>
+
+            </form>
+        </div>
+
+        {% for comment in comments %}
+        <div class="comentario">
+            <p><b>
+                    <ion-icon class="person_image" name="person-circle-outline"></ion-icon>{{ comment.author }}
+                    Comentou:
+                </b></p>
+            <p class="comment">{{ comment.text }}</p>
+            <p><b>{{ comment.created_date }}</b></p>
+
+        </div>
+        {% endfor %}
+
+
+    </div>
+</section>
+
+<style>
+    .Estrutura {
+        margin: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Atividade {
+        width: 95%;
+        background-color: rgba(112, 112, 106, 0.274);
+        display: flex;
+        min-height: 60vh;
+        max-height: 5000vh;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .Atividade2 {
+        width: 95%;
+        background-color: rgba(112, 112, 106, 0.274);
+        min-height: 10vh;
+        max-height: 5000vh;
+    }
+
+    .post-container {
+        max-width: 100%;
+        min-height: 68vh;
+        width: 80vh;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .post-c {
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border: 2px solid black;
+        min-height: 68vh;
+    }
+
+    .imagem {
+        width: 55vh;
+        height: 35vh;
+    }
+
+    .linha {
+        border-bottom: 2px solid #000;
+        width: 80%;
+        margin: 8px auto;
+    }
+
+    .texto {
+        min-height: 10vh;
+        max-width: 60vh;
+    }
+
+    .texto_post {
+        font-size: 13px;
+    }
+
+    .data {
+        font-size: 13px;
+    }
+
+    .comentar {
+        width: 90px;
+        height: 20px;
+    }
+
+    .baixo {
+        width: 80%;
+        display: flex;
+        align-items: center;
+    }
+
+    .comentar {
+        height: 4vh;
+        margin-left: 7vh;
+    }
+
+    .comentario {
+        margin: 20px;
+        padding: 10px;
+
+        background-color: white;
+    }
+
+    .comment-form {
+        margin: 20px;
+        padding: 10px;
+        background-color: white;
+    }
+
+    .entrada_de_texto {
+        width: 100%;
+    }
+
+    .comment {
+        margin-bottom: 8px;
+        margin-top: 8px;
+        font-size: 13px;
+    }
+
+    .person_image {
+        margin-right: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .post-container {
+            min-height: 65vh;
+            width: 85%;
+        }
+
+        .post-c {
+            min-height: 65vh;
+        }
+
+        .Atividade {
+            width: 110%;
+        }
+
+        .imagem {
+            width: 30vh;
+            height: 30vh;
+        }
+
+        .texto {
+            min-height: 13vh;
+            max-width: 30vh;
+            font-size: 13px;
+        }
+
+        .data {
+            font-size: 14px;
+        }
+
+        .comentar {
+            height: 4vh;
+            margin-left: 1vh;
+        }
+
+    }
+</style>
+
+{% endblock %}

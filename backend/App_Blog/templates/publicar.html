@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<section class="Estrutura">
+    <h1>Publicar</h1><br>
+    <div class="Atividade">
+        <form action="{% url 'publicar' %}" class="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <!-- <label for="titulo">Titulo do Post:</label><br>
+            <input type="text" name="titulo" required><br><br>
+
+            <label for="texto_post">Texto do Post:</label><br>
+            <textarea name="texto_post" class="entrada_de_texto" required></textarea><br>
+
+            <label for="imagem">Imagem:</label><br>
+            <input type="file" name="imagem" required><br><br> -->
+
+            <button type="submit">Publicar</button>
+
+        </form>
+    </div>
+</section>
+
+<style>
+    .Estrutura {
+        margin: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Atividade {
+        width: 95%;
+        background-color: rgba(112, 112, 106, 0.274);
+        display: flex;
+        height: 53vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .entrada_de_texto {
+        width: 80vh;
+        height: 20vh;
+    }
+
+
+    text {
+        width: 80vh;
+
+    }
+
+
+    @media screen and (max-width: 768px) {
+        .form {
+            width: 40vh;
+        }
+
+        text-area {
+            width: 30vh;
+
+        }
+    }
+</style>
+
+
+
+{% endblock %}

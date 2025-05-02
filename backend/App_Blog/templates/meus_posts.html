@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<section class="Estrutura">
+    <h1>Meu Perfil</h1><br>
+
+    <div class="Estrutura_inicio"><br>
+        <ion-icon class="person_image" name="person-circle-outline"></ion-icon>
+        <h1>{% if user.is_authenticated %}{{ user.username }}{% endif %}</h1><br>
+        <p><button class="publicar"><a class="link" href="{% url 'logout' %}">Sair</a></button></p><br>
+        <p>faça uma nova publicação: <button class="publicar"><a class="link"
+                    href="{% url 'publicar' %}">Publicar</a></button></p>
+        <br><br>
+    </div><br><br>
+    <h2>Seus Posts:</h2>
+    <div class="Atividade">
+        {% block content %}
+        {% for post in posts %}
+        <div class="post-container">
+            <div class="post-c"><br>
+                <div>
+                    <h3>{{ post.title }}</h3>
+                </div>
+                <div class="linha"></div>
+                <div>
+                    <img class="imagem" src="{{post.image.url}}" alt="imagem de {{ post.author }}">
+                </div>
+                <div class="linha"></div>
+                <div class="texto">
+                    <p class="texto_post">{{ post.text|slice:":200"|safe }}
+                        {% if post.text|length > 200 %}
+                        <a href="{% url 'post_detail' post.id %}" class="ler_mais"><b>Ler Mais...</b></a>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="linha"></div>
+                <div>
+                    <p class="aut">Criador por: {{ post.author }}</p>
+                </div>
+                <div class="data">
+                    <p>Publicado em {{ post.published_date }} </p>
+                </div>
+                <div class="linha"></div>
+                <div>
+                    <a href="{% url 'post_detail' post.id %}"><button class="but">Ver</button></a>
+                    <a href="{% url 'editar_post' post.id %}"><button class="but">Editar</button></a>
+                    <a href="{% url 'delete_post' post.id %}"><button class="but">Deletar</button></a>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+        {% endblock %}
+    </div>
+</section>
+
+<style>
+    .Estrutura {
+        margin: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Estrutura_inicio {
+        width: 95%;
+        background-color: rgba(112, 112, 106, 0.274);
+        max-height: 1700vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        justify-content: space-around;
+        align-items: center;
+
+    }
+
+    .Atividade {
+        width: 95%;
+        background-color: rgba(112, 112, 106, 0.274);
+        display: flex;
+        min-height: 30vh;
+        max-height: 5000vh;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .post-container {
+        max-width: 100%;
+        height: 79vh;
+        width: 80vh;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .post-c {
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border: 2px solid black;
+        height: 74vh;
+    }
+
+    .imagem {
+        width: 55vh;
+        height: 35vh;
+    }
+
+    .linha {
+        border-bottom: 2px solid #000;
+        width: 80%;
+        margin: 8px auto;
+    }
+
+    .aut {
+        font-size: 13px;
+    }
+
+    .data {
+        font-size: 13px;
+    }
+
+    .texto {
+        height: 10vh;
+        max-width: 60vh;
+    }
+
+    .texto_post {
+        font-size: 13px;
+    }
+
+    .ler_mais {
+        text-decoration: none;
+        color: black;
+    }
+
+    .publicar {
+        width: 90px;
+        height: 20px;
+    }
+
+    .but {
+        width: 90px;
+        height: 20px;
+        margin-left: 13px;
+        margin-right: 13px;
+    }
+
+    .person_image {
+        width: 40vh;
+        height: 40vh;
+    }
+
+    @media screen and (max-width: 768px) {
+        .post-container {
+            height: 67vh;
+            width: 85%;
+        }
+
+        .post-c {
+            height: 67vh;
+        }
+
+        .Atividade {
+            width: 110%;
+        }
+
+        .imagem {
+            width: 30vh;
+            height: 30vh;
+        }
+
+        .texto {
+            height: 13vh;
+            max-width: 30vh;
+            font-size: 13px;
+        }
+
+        .data {
+            font-size: 14px;
+        }
+
+        .but {
+            width: 60px;
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+    }
+</style>
+
+{% endblock %}

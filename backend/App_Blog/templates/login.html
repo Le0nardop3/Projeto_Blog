@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block conteudo %}
+<div class="c_conteudo">
+  <div class="conteudo">
+    <div class="loginn">
+      <form action="" method="post">
+        {% csrf_token %}
+        <h2>Entrar</h2><br>
+        <label for="nome">Nome:</label><br>
+        <input type="text" name="nome" placeholder="Nome..." required><br>
+        <label for="Senha">Senha:</label>
+        <br> <input type="password" name="senha" placeholder="Senha..." required><br><br>
+        <input type="submit" id="login-button" value="Fazer Login">
+        {% if error_message %}<br><br>
+        <p class="aviso">Nome ou senha invalidos</p>{% endif %}
+        {% if error_message2 %}<br><br>
+        <p class="aviso">Faça login</p>{% endif %}
+      </form>
+    </div>
+    <p>não tem uma conta? <a href="{% url 'cadastro' %}">Cadastre-se</a></p>
+  </div>
+</div>
+
+<style>
+  .c_conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75vh;
+
+  }
+
+  .conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .loginn {
+    width: 40vh;
+    padding: 25px;
+    border: 2px solid black;
+    background-color: linen;
+    margin-bottom: 25px;
+    margin-top: 17vh;
+  }
+
+  .aviso {
+    color: red;
+  }
+
+  .aviso2 {
+    color: green;
+  }
+</style>
+
+{% endblock %}
