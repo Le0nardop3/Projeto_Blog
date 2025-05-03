@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block conteudo %}
+{% block content %}
 
 <section class="Estrutura">
     <h1>Publicar</h1><br>
@@ -7,18 +7,7 @@
         <form action="{% url 'publicar' %}" class="form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-
-            <!-- <label for="titulo">Titulo do Post:</label><br>
-            <input type="text" name="titulo" required><br><br>
-
-            <label for="texto_post">Texto do Post:</label><br>
-            <textarea name="texto_post" class="entrada_de_texto" required></textarea><br>
-
-            <label for="imagem">Imagem:</label><br>
-            <input type="file" name="imagem" required><br><br> -->
-
             <button type="submit">Publicar</button>
-
         </form>
     </div>
 </section>
@@ -36,36 +25,38 @@
         width: 95%;
         background-color: rgba(112, 112, 106, 0.274);
         display: flex;
-        height: 53vh;
-        display: flex;
+        height: auto;
+        padding: 20px;
         align-items: center;
-        justify-content: space-around;
+        justify-content: center;
     }
 
-    .entrada_de_texto {
-        width: 80vh;
-        height: 20vh;
+    .form {
+        width: 100%;
+        max-width: 600px;
     }
 
-
-    text {
-        width: 80vh;
-
+    .form input[type="text"],
+    .form textarea,
+    .form input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
     }
 
+    .form button {
+        padding: 10px 20px;
+        background-color: #444;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
 
     @media screen and (max-width: 768px) {
         .form {
-            width: 40vh;
-        }
-
-        text-area {
-            width: 30vh;
-
+            width: 90%;
         }
     }
 </style>
-
-
 
 {% endblock %}

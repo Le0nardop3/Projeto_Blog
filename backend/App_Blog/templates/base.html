@@ -1,192 +1,66 @@
-{% load static %}
+<!-- backend/App_Blog/templates/base.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog_Associação</title>
-    <script src="{% static 'scripts.js' %}" defer></script>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>{% block title %}Blog ABSJ{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Remover margens e preenchimentos laterais do corpo */
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
+        /* Remover margens laterais do conteúdo principal */
+        main {
+            margin-left: 5px;  /* Pequena margem para não colar na borda */
+            margin-right: 5px; /* Pequena margem para não colar na borda */
+        }
+
+        /* Garantir que o footer ocupe toda a largura com mínima margem */
+        footer {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
 </head>
-
 <body>
-
-    <header class="cabecalho">
-        {% if user.is_authenticated %}
-        <h3 class="usuario">
-            <ion-icon class="Person" name="person-circle-outline"></ion-icon>
-            <a class="link">{{ user.username }}</a>
-        </h3>
-        <div class="pesquisa">
-            <form method="get" action="{% url 'plataforma' %}">
-                <input type="text" name="q" placeholder="Pesquisar posts..." value="{{ query }}">
-                <button type="submit">
-                    <h3 class="h3_pesquisar">Pesquisar</h3>
-                </button>
-            </form>
-        </div>
-        <div class="opcoes-menu">
-            <button class="opcoes-btn" onclick="toggleMenu()">
-                <h3 class="op_menu">Opções</h3>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'plataforma' %}">Projeto ABSJ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="opcoes-conteudo" id="opcoesConteudo">
-                <a class="link" href="{% url 'plataforma' %}">Blog</a>
-                <a class="link" href="{% url 'meus_posts' %}">Perfil</a>
-                <a class="link" href="">Tema</a>
-                <a class="link" href="{% url 'logout' %}">Sair</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'meus_posts' %}">Meus Posts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Sair</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cadastro' %}">Cadastrar</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
-        {% else %}
-        <h3 class="plataforma"><a id="blog" class="link" href="{% url 'plataforma' %}">Bem vindo ao nosso Blog</a></h3>
+    </nav>
 
-        <h3 class="login"><a class="link" href="{% url 'login' %}">Login</a></h3>
-        {% endif %}
+    <!-- Usando container-fluid no lugar de container para garantir largura total -->
+    <main class="container-fluid">
+        {% block content %}{% endblock %}
+    </main>
 
-    </header>
-
-    {% block conteudo %}
-
-    <!-- Conteúdo da página -->
-
-    {% endblock %}
-
-    <footer class="cabecalho">
-        <div class="footer">
-            <p>&Leonardo VIlar</p>
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <div class="container">
+            &copy; {{ year|default:"2025" }} Projeto ABSJ. Todos os direitos reservados.
         </div>
     </footer>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .link {
-            text-decoration: none;
-            color: black;
-        }
-
-        .cabecalho {
-            background-color: grey;
-            height: 8vh;
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            justify-content: space-around;
-        }
-
-        .person {
-            width: 20px;
-        }
-
-        .opcoes-menu {
-            position: relative;
-            display: inline-block;
-        }
-
-        .opcoes-btn {
-            background-color: grey;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .opcoes-conteudo {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border: 2px solid #000;
-        }
-
-        .opcoes-conteudo a {
-            color: black;
-            padding: 12px 16px;
-            display: block;
-        }
-
-        .opcoes-conteudo a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .opcoes-menu:hover .opcoes-conteudo {
-            display: block;
-        }
-
-        .pesquisa {
-            display: flex;
-            align-items: center;
-            margin-right: -40vh;
-            margin-left: 40vh;
-        }
-
-        .pesquisa input {
-            padding: 6px;
-            /* background-color: grey; */
-            border-radius: 20px;
-
-        }
-
-        .pesquisa button {
-            padding: 8px;
-            cursor: pointer;
-            background-color: grey;
-            border: none;
-        }
-
-
-        @media screen and (max-width: 768px) {
-            .pesquisa input {
-                margin: 0px;
-                /* background-color: grey; */
-                border-radius: 10px;
-                width: 8vh;
-            }
-
-            .pesquisa {
-                margin-right: -2vh;
-                margin-left: 2vh;
-            }
-
-            .pesquisa button {
-                margin: 0px;
-                cursor: pointer;
-                background-color: grey;
-                border: none;
-            }
-
-            .usuario {
-                font-size: 13px;
-            }
-
-            .h3_pesquisar {
-                font-size: 13px;
-            }
-
-            .op_menu {
-                font-size: 13px;
-            }
-
-        }
-    </style>
-
-    <!-- Links dos ícones do Ionicons (mantenha se necessário) -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-    <script>
-        function toggleMenu() {
-            var opcoesConteudo = document.getElementById('opcoesConteudo');
-            opcoesConteudo.style.display === 'block' ? opcoesConteudo.style.display = 'none' : opcoesConteudo.style.display = 'block';
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
 </body>
-
 </html>

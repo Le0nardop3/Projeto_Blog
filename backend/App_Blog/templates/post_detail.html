@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
-{% block conteudo %}
+{% block content %}
 
 <section class="Estrutura">
     <h1>Post de {{ post.author }}</h1><br>
+    
     <div class="Atividade">
         <div class="post-container">
-            <div class="post-c"><br>
-                <div>
-                    <h3>{{ post.title }}</h3>
-                </div>
+            <div class="post-c">
+                <h3>{{ post.title }}</h3>
                 <div class="linha"></div>
-                <div>
-                    <img class="imagem" src="{{post.image.url}}" alt="imagem de {{ post.author }}">
-                </div>
+                <img class="imagem" src="{{ post.image.url }}" alt="imagem de {{ post.author }}">
                 <div class="linha"></div>
                 <div class="texto">
                     <p class="texto_post">{{ post.text|safe }}</p>
@@ -20,51 +17,44 @@
                 <div class="linha"></div>
                 <div class="baixo">
                     <div class="data">
-                        <p>Criador por: {{ post.author }}</p>
-                        <p>Publicado em {{ post.created_date }} </p>
+                        <p>Criado por: {{ post.author }}</p>
+                        <p>Publicado em {{ post.created_date|date:"d/m/Y H:i" }}</p>
                     </div>
                     <ion-icon class="comentar" name="chatbubble-outline"></ion-icon>
-                </div><br>
-
+                </div>
             </div>
         </div>
     </div>
-    <br><br>
-    <h2>Comentarios</h2><br>
-    <div class="Atividade2">
 
+    <br><br>
+    <h2>Comentários</h2><br>
+    
+    <div class="Atividade2">
         <div class="comment-form">
             <form method="post" class="comment-form-t">
                 {% csrf_token %}
-
                 <input type="hidden" name="author" value="{{ user.username }}">
-
                 <label for="texto_post"><b>Comentar:</b></label><br>
                 <textarea name="text" rows="3" class="entrada_de_texto" required></textarea><br>
-
                 <button type="submit">Adicionar Comentário</button>
-
             </form>
         </div>
 
         {% for comment in comments %}
         <div class="comentario">
-            <p><b>
-                    <ion-icon class="person_image" name="person-circle-outline"></ion-icon>{{ comment.author }}
-                    Comentou:
-                </b></p>
+            <p><b><ion-icon class="person_image" name="person-circle-outline"></ion-icon>{{ comment.author }} comentou:</b></p>
             <p class="comment">{{ comment.text }}</p>
-            <p><b>{{ comment.created_date }}</b></p>
-
+            <p><b>{{ comment.created_date|date:"d/m/Y H:i" }}</b></p>
         </div>
+        {% empty %}
+        <p>Sem comentários ainda. Seja o primeiro!</p>
         {% endfor %}
-
-
     </div>
 </section>
 
 <style>
-    .Estrutura {
+/* (mantive o seu CSS, mas com pequenas correções) */
+.Estrutura {
         margin: 40px;
         display: flex;
         flex-direction: column;

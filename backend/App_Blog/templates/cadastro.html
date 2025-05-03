@@ -1,48 +1,41 @@
 {% extends 'base.html' %}
-{% block conteudo %}
-<div class="c_conteudo">
-  <div class="conteudo">
-    <form action="{% url 'cadastro' %}" method="POST">{% csrf_token %}
-      <h2>Cadastro de Usuários</h2><br>
-      <label for="nome">Nome:</label>
-      <br> <input type="text" name="nome" placeholder="Nome..." required><br>
-      <label for="email">Email:</label>
-      <br> <input type="email" name="email" placeholder="email..." required><br>
-      <label for="senha">Senha:</label>
-      <br> <input type="password" name="senha" placeholder="Senha..." required><br><br>
-      <input type="submit" value="Cadastrar">
-      {% if message2 %}<br><br><p class="aviso2">Usuario cadastrado</p>{% endif %}
-      {% if message %}<br><br><p class="aviso">Já existe um usuario com esse nome</p>{% endif %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card p-4" style="width: 100%; max-width: 400px;">
+    <h3 class="text-center mb-4">Cadastro de Usuários</h3>
+
+    <form action="{% url 'cadastro' %}" method="POST">
+      {% csrf_token %}
+
+      <div class="form-group mb-3">
+        <label for="id_nome">Nome:</label>
+        <input type="text" class="form-control" id="id_nome" name="nome" placeholder="Nome..." required>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="id_email">Email:</label>
+        <input type="email" class="form-control" id="id_email" name="email" placeholder="Email..." required>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="id_senha">Senha:</label>
+        <input type="password" class="form-control" id="id_senha" name="senha" placeholder="Senha..." required>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
+
+      {% if message2 %}
+        <div class="alert alert-success text-center mt-3" role="alert">
+          Usuário cadastrado
+        </div>
+      {% endif %}
+
+      {% if message %}
+        <div class="alert alert-danger text-center mt-3" role="alert">
+          Já existe um usuário com esse nome
+        </div>
+      {% endif %}
     </form>
   </div>
 </div>
-
-<style>
-  .c_conteudo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 75vh;
-
-  }
-
-  .conteudo {
-    width: 40vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border: 2px solid black;
-    padding: 25px;
-    margin-top: 17vh;
-    background-color: linen;
-
-  }
-  .aviso{
-    color: red;
-  }
-  .aviso2{
-    color: green;
-  }
-</style>
-
 {% endblock %}

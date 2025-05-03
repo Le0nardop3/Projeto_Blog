@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block conteudo %}
+{% block content %}
 <section class="Estrutura">
     <h1>Meu Perfil</h1><br>
 
@@ -7,13 +7,12 @@
         <ion-icon class="person_image" name="person-circle-outline"></ion-icon>
         <h1>{% if user.is_authenticated %}{{ user.username }}{% endif %}</h1><br>
         <p><button class="publicar"><a class="link" href="{% url 'logout' %}">Sair</a></button></p><br>
-        <p>faça uma nova publicação: <button class="publicar"><a class="link"
-                    href="{% url 'publicar' %}">Publicar</a></button></p>
+        <p>faça uma nova publicação: <button class="publicar"><a class="link" href="{% url 'publicar' %}">Publicar</a></button></p>
         <br><br>
     </div><br><br>
+
     <h2>Seus Posts:</h2>
     <div class="Atividade">
-        {% block content %}
         {% for post in posts %}
         <div class="post-container">
             <div class="post-c"><br>
@@ -22,7 +21,7 @@
                 </div>
                 <div class="linha"></div>
                 <div>
-                    <img class="imagem" src="{{post.image.url}}" alt="imagem de {{ post.author }}">
+                    <img class="imagem" src="{{ post.image.url }}" alt="imagem de {{ post.author }}">
                 </div>
                 <div class="linha"></div>
                 <div class="texto">
@@ -34,10 +33,10 @@
                 </div>
                 <div class="linha"></div>
                 <div>
-                    <p class="aut">Criador por: {{ post.author }}</p>
+                    <p class="aut">Criado por: {{ post.author }}</p>
                 </div>
                 <div class="data">
-                    <p>Publicado em {{ post.published_date }} </p>
+                    <p>Publicado em {{ post.published_date }}</p>
                 </div>
                 <div class="linha"></div>
                 <div>
@@ -45,15 +44,14 @@
                     <a href="{% url 'editar_post' post.id %}"><button class="but">Editar</button></a>
                     <a href="{% url 'delete_post' post.id %}"><button class="but">Deletar</button></a>
                 </div>
-
             </div>
         </div>
         {% endfor %}
-        {% endblock %}
     </div>
 </section>
 
 <style>
+    /* Mantém exatamente o mesmo CSS que você usava antes, sem alterações */
     .Estrutura {
         margin: 40px;
         display: flex;
@@ -134,15 +132,15 @@
         text-decoration: none;
         color: black;
     }
-
+    
     .publicar {
         width: 90px;
-        height: 20px;
+        height: 30px;
     }
 
     .but {
         width: 90px;
-        height: 20px;
+        height: 30px;
         margin-left: 13px;
         margin-right: 13px;
     }

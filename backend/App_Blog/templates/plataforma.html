@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-{% block conteudo %}
+{% block content %}
 
 <section class="Estrutura">
     <h1>Posts</h1><br>
     <div class="Atividade">
-        {% block content %}
         {% for post in posts %}
         <div class="post-container">
             <div class="post-c"><br>
@@ -26,14 +25,13 @@
                 <div class="linha"></div>
                 <div class="baixo">
                     <div class="data">
-                        <p>Criador por: {{ post.author }}</p>
+                        <p>Criado por: {{ post.author }}</p>
                         <p>Publicado em {{ post.published_date }} </p>
                     </div>
                     <a class="comentar-link" href="{% url 'post_detail' post.id %}">
                         <ion-icon class="comentar" name="chatbubble-outline"></ion-icon>
                     </a>
                 </div>
-
             </div>
         </div>
         {% endfor %}
@@ -41,8 +39,6 @@
         {% if query and posts.count == 0 %}
         <p>Nenhum resultado encontrado para "{{ query }}".</p>
         {% endif %}
-        {% endblock %}
-
     </div>
 
     <div class="pagination">
@@ -57,22 +53,25 @@
             </span>
 
             {% if posts.has_next %}
-            <a href="?page={{ posts.next_page_number }}">Próxima </a>
-            <a href="?page={{ posts.paginator.num_pages }}">Ultima &raquo;</a>
+            <a href="?page={{ posts.next_page_number }}">Próxima</a>
+            <a href="?page={{ posts.paginator.num_pages }}">Última &raquo;</a>
             {% endif %}
         </span>
     </div>
 </section>
 
+<!-- Mantém o mesmo CSS que você já tinha -->
 <style>
     .Estrutura {
-        margin: 40px;
+        /* background-color: blue; */
+        /* position: absolute; */
+        /* margin: 40px; */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
-
+    
     .Atividade {
         width: 95%;
         background-color: rgba(112, 112, 106, 0.274);
